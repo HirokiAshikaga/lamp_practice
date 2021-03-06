@@ -5,22 +5,22 @@ require_once MODEL_PATH . 'user.php';
 require_once MODEL_PATH . 'item.php';
 
 session_start();
-
+//ログインしていなければログイン画面へ
 if(is_logined() === false){
   redirect_to(LOGIN_URL);
 }
-
+//データベース接続
 $db = get_db_connect();
-
+//ログイン済みかをチェック
 $user = get_login_user($db);
-
+//adminユーザーでなければログイン画面へ
 if(is_admin($user) === false){
   redirect_to(LOGIN_URL);
 }
-
+//item_id,statusがセットされているかをチェック
 $item_id = get_post('item_id');
 $changes_to = get_post('changes_to');
-
+//status切り替え
 if($changes_to === 'open'){
   update_item_status($db, $item_id, ITEM_STATUS_OPEN);
   set_message('ステータスを変更しました。');
