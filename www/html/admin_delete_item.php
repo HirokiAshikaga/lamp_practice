@@ -5,22 +5,22 @@ require_once MODEL_PATH . 'user.php';
 require_once MODEL_PATH . 'item.php';
 
 session_start();
-
+//ログインしていなければログイン画面へ
 if(is_logined() === false){
   redirect_to(LOGIN_URL);
 }
-
+//データベース接続
 $db = get_db_connect();
-
+//ログイン済みかをチェック
 $user = get_login_user($db);
-
+//adminユーザーでなければログイン画面へ
 if(is_admin($user) === false){
   redirect_to(LOGIN_URL);
 }
-
+//item_idがセットされているかをチェック
 $item_id = get_post('item_id');
 
-
+//商品を削除
 if(destroy_item($db, $item_id) === true){
   set_message('商品を削除しました。');
 } else {
