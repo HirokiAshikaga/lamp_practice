@@ -1,5 +1,6 @@
 <?php
 require_once MODEL_PATH . 'functions.php';
+$token = get_csrf_token();
 ?>
 
 <!DOCTYPE html>
@@ -40,7 +41,7 @@ require_once MODEL_PATH . 'functions.php';
                 個
                 <input type="submit" value="変更" class="btn btn-secondary">
                 <input type="hidden" name="cart_id" value="<?php print(h($cart['cart_id'])); ?>">
-                <input type="hidden" name="csrf_token" value="<?php print(h(get_csrf_token())); ?>">
+                <input type="hidden" name="csrf_token" value="<?php print(h($token)); ?>">
               </form>
             </td>
             <td><?php print(number_format($cart['price'] * $cart['amount'])); ?>円</td>
@@ -49,7 +50,7 @@ require_once MODEL_PATH . 'functions.php';
               <form method="post" action="cart_delete_cart.php">
                 <input type="submit" value="削除" class="btn btn-danger delete">
                 <input type="hidden" name="cart_id" value="<?php print(h($cart['cart_id'])); ?>">
-                <input type="hidden" name="csrf_token" value="<?php print(h(get_csrf_token())); ?>">
+                <input type="hidden" name="csrf_token" value="<?php print(h($token)); ?>">
               </form>
 
             </td>
@@ -60,7 +61,7 @@ require_once MODEL_PATH . 'functions.php';
       <p class="text-right">合計金額: <?php print number_format($total_price); ?>円</p>
       <form method="post" action="finish.php">
         <input class="btn btn-block btn-primary" type="submit" value="購入する">
-        <input type="hidden" name="csrf_token" value="<?php print(h(get_csrf_token())); ?>">
+        <input type="hidden" name="csrf_token" value="<?php print(h($token)); ?>">
       </form>
     <?php } else { ?>
       <p>カートに商品はありません。</p>
