@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- ホスト: mysql
--- 生成日時: 2021 年 3 月 14 日 11:34
+-- 生成日時: 2021 年 3 月 14 日 14:23
 -- サーバのバージョン： 5.7.33
 -- PHP のバージョン: 7.4.15
 
@@ -40,7 +40,7 @@ CREATE TABLE `orders` (
 --
 
 CREATE TABLE `order_details` (
-  `detail_id` int(11) NOT NULL,
+  `details_id` int(11) NOT NULL,
   `order_id` int(11) NOT NULL,
   `item_id` int(11) NOT NULL,
   `amount` int(11) NOT NULL,
@@ -59,6 +59,12 @@ ALTER TABLE `orders`
   ADD PRIMARY KEY (`order_id`);
 
 --
+-- テーブルのインデックス `order_details`
+--
+ALTER TABLE `order_details`
+  ADD PRIMARY KEY (`details_id`);
+
+--
 -- ダンプしたテーブルの AUTO_INCREMENT
 --
 
@@ -67,6 +73,12 @@ ALTER TABLE `orders`
 --
 ALTER TABLE `orders`
   MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- テーブルの AUTO_INCREMENT `order_details`
+--
+ALTER TABLE `order_details`
+  MODIFY `details_id` int(11) NOT NULL AUTO_INCREMENT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
