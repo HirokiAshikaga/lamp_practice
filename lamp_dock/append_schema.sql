@@ -40,6 +40,7 @@ CREATE TABLE `orders` (
 --
 
 CREATE TABLE `order_details` (
+  `detail_id` int(11) NOT NULL,
   `order_id` int(11) NOT NULL,
   `item_id` int(11) NOT NULL,
   `amount` int(11) NOT NULL,
