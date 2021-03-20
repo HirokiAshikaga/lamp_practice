@@ -148,7 +148,7 @@ function validate_cart_purchase($carts){
       set_error($cart['name'] . 'は現在購入できません。');
     }
     if($cart['stock'] - $cart['amount'] < 0){
-      set_error($cart['name'] . 'は在庫が足りません。購入可能数:' . $cart['stock']);
+      set_error($cart['name'] . 'は在庫が足りません。購入可能数:' . $cart[2]);
     }
   }
   if(has_error() === true){
@@ -157,3 +157,48 @@ function validate_cart_purchase($carts){
   return true;
 }
 
+function insert_orders($db, $user_id){
+  $sql = "
+    INSERT INTO
+      orders(
+        user_id
+      )
+    VALUES(?)
+  ";
+
+  return execute_query($db, $sql, array($user_id));
+}
+
+function insert_order_details($db, $order_id, $item_id, $amount, $price){
+  $sql = "
+    INSERT INTO
+      order_details(
+        order_id,
+        item_id,
+        amount,
+        price
+      )
+    VALUES(?, ?, ?, ?)
+  ";
+
+  return execute_query($db, $sql, array($order_id, $item_id, $amount, $price));
+}
+
+function regist_order($db, $user_id, $carts = array()){
+  $db->beginTransaction();
+  if(insert_orders($db, $user_id)){
+    $order_id = $db->lastInsertid('order_id');
+    
+      foreach($carts as $cart){
+        insert_order_details($db, $order_id, $cart['item_id'], $cart['amount'], $cart['price']);
+      }
+      if(has_error() === false){
+        $db->commit();
+        return true;
+      }
+        
+  }
+  
+  $db->rollback();
+  return false;
+}
