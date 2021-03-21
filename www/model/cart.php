@@ -148,7 +148,7 @@ function validate_cart_purchase($carts){
       set_error($cart['name'] . 'は現在購入できません。');
     }
     if($cart['stock'] - $cart['amount'] < 0){
-      set_error($cart['name'] . 'は在庫が足りません。購入可能数:' . $cart[2]);
+      set_error($cart['name'] . 'は在庫が足りません。購入可能数:' . $cart['stock']);
     }
   }
   if(has_error() === true){
