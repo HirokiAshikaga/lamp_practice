@@ -17,7 +17,15 @@ $token = get_csrf_token();
 
   <div class="container">
     <h1>商品一覧</h1>
-    <?php include VIEW_PATH . 'templates/messages.php'; ?>
+
+    <form action="index.php" method="get" class="text-right">
+      <select name="order">
+        <option value="defult">新着順</option>
+        <option value="low_price">安値順</option>
+        <option value="high_price">高値順</option>
+      </select>
+      <input type="submit" value="並べ替え">
+    </form>
 
     <div class="card-deck">
       <div class="row">
